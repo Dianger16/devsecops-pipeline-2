@@ -11,7 +11,7 @@ permissions:
 
 jobs:
   hadolint:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       - uses: hadolint/hadolint-action@v3.1.0
@@ -20,7 +20,7 @@ jobs:
           config: .hadolint.yaml
 
   kube-linter:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       - uses: stackrox/kube-linter-action@v1.0.5
@@ -29,10 +29,10 @@ jobs:
           config: .kube-linter.yaml
 
   trivy-k8s:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
-      - uses: aquasecurity/trivy-action@0.28.0
+      - uses: aquasecurity/trivy-action@v0.36.0
         with:
           scan-type: config
           scan-ref: k8s
@@ -41,7 +41,7 @@ jobs:
           exit-code: "1"
 
   kind-e2e:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     needs: [hadolint, kube-linter, trivy-k8s]
     steps:
       - uses: actions/checkout@v4
