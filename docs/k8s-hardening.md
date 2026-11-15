@@ -1,7 +1,7 @@
 # Docker + K8s hardening: proof checklist
 
 Run: `make docker-build docker-scan` then `make cluster deploy test-policies verify-rbac`
-Then: `make kyverno` (wait for pods), `make policies`, `kubectl apply -f k8s/tests/bad-pod-latest.yaml` (must fail).
+Then: `make kyverno` (wait for pods), `make policies`, `kubectl apply -f tests-k8s/bad-pod-latest.yaml` (must fail).
 
 Capture for the portfolio:
 1. Image size + CVE count: old Dockerfile (python:slim) vs distroless multi-stage.
