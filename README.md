@@ -9,5 +9,4 @@ Secure CI gates: Gitleaks (secrets), Semgrep (SAST), Trivy (deps, IaC, image). B
 
 ## Prove it works
 Test branch: add a fake hardcoded secret in app/main.py and a vulnerable dep (`requests==2.19.0`) in requirements.txt. Screenshot the failed run, then fix it.
-# devsecops-pipeline-2
-# devsecops-pipeline-2
+
