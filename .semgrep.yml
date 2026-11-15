@@ -1,0 +1,16 @@
+rules:
+  - id: no-shell-true
+    languages: [python]
+    severity: ERROR
+    message: subprocess with shell=True allows command injection.
+    pattern: subprocess.$FUNC(..., shell=True, ...)
+  - id: no-eval
+    languages: [python]
+    severity: ERROR
+    message: eval() on dynamic input is dangerous.
+    pattern: eval(...)
+  - id: no-hardcoded-aws-key
+    languages: [generic]
+    severity: ERROR
+    message: Possible hardcoded AWS access key.
+    pattern-regex: AKIA[0-9A-Z]{16}

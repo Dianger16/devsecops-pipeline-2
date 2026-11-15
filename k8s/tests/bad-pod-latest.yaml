@@ -1,0 +1,20 @@
+# MUST be rejected by Kyverno (latest tag) once policies are installed
+apiVersion: v1
+kind: Pod
+metadata:
+  name: bad-latest
+  namespace: secure-app
+spec:
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 65532
+    seccompProfile:
+      type: RuntimeDefault
+  containers:
+    - name: bad
+      image: busybox:latest
+      command: ["sleep", "3600"]
+      securityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop: ["ALL"]

@@ -1,0 +1,27 @@
+# Edit the image pattern + repo path to match your registry.
+# Only images matching imageReferences are checked; local kind images are unaffected.
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: verify-signed-images
+spec:
+  validationFailureAction: Enforce
+  webhookTimeoutSeconds: 30
+  rules:
+    - name: verify-cosign-keyless
+      match:
+        any:
+          - resources:
+              kinds: [Pod]
+      verifyImages:
+        - imageReferences:
+            - "ghcr.io/dianger16/devsecops-*"
+          mutateDigest: true
+          required: true
+          attestors:
+            - entries:
+                - keyless:
+                    issuer: https://token.actions.githubusercontent.com
+                    subjectRegExp: "^https://github.com/Dianger16/devsecops-pipeline/.*"
+                    rekor:
+                      url: https://rekor.sigstore.dev

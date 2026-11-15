@@ -1,0 +1,28 @@
+# Least privilege: app needs no API access, so it gets no Role.
+# Example read-only role for a human/CI deployer limited to this namespace.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: app-viewer
+  namespace: secure-app
+rules:
+  - apiGroups: [""]
+    resources: ["pods", "services"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: ["apps"]
+    resources: ["deployments"]
+    verbs: ["get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: app-viewer-binding
+  namespace: secure-app
+subjects:
+  - kind: User
+    name: viewer
+    apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: Role
+  name: app-viewer
+  apiGroup: rbac.authorization.k8s.io
